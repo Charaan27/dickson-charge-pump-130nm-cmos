@@ -1,0 +1,28 @@
+* c:\users\kumar\esim-workspace\dickson_ckt\dickson_ckt.cir
+
+.include NMOS-180nm.lib
+m2 v1 v1 v2 gnd CMOSN W=240nm L=180nm M=1
+m3 v2 v2 v3 gnd CMOSN W=240nm L=180nm M=1
+m4 v3 v3 v4 gnd CMOSN W=240nm L=180nm M=1
+m5 v4 v4 out gnd CMOSN W=240nm L=180nm M=1
+c1  v1 clk1 1p
+c2  v2 clk2 1p
+c3  v3 clk1 1p
+c4  v4 clk2 1p
+cout1  out gnd 1p
+v2  clk1 gnd pulse(0 1.8 10n 0 0 10n 20n)
+v3  clk2 gnd pulse(0 1.8 0 0 0 10n 20n)
+v1 in gnd  dc 1.8
+r1  out gnd 1000k
+m1 in in v1 gnd CMOSN W=240nm L=180nm M=1
+* u1  out plot_v1
+.tran 1e-09 10000e-09 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(out)
+.endc
+.end
